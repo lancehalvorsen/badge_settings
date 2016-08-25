@@ -1,0 +1,27 @@
+<h2>Your Device Settings</h2>
+
+<ul>
+
+  <li>
+    <strong>ssid:</strong>
+    <%= @setting.ssid %>
+  </li>
+
+  <li>
+    <strong>password:</strong>
+    <%= @setting.password %>
+  </li>
+
+  <li>
+    <strong>handle:</strong>
+    <%= @setting.handle %>
+  </li>
+
+  <li>
+    <strong>hashtag:</strong>
+    <%= @setting.hashtag %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: setting_path(@conn, :new) %>
