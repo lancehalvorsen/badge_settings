@@ -3,6 +3,9 @@ defmodule BadgeSettings.SettingController do
 
   alias BadgeSettings.Setting
 
+  plug :authenticate
+  plug :set_login_link
+
   @setting_file Application.get_env(:badge_settings, :nerves_settings).settings_file
   @device_name Application.get_env(:badge_settings, :nerves_settings).device_name
 
@@ -19,11 +22,10 @@ defmodule BadgeSettings.SettingController do
     changeset = Setting.changeset(%Setting{}, setting_params)
     encoded = :erlang.term_to_binary(changeset.changes)
 
-    filename = "nerves_settings.txt"
-    File.write!(filename, encoded)
 
     case changeset.valid? do
       true ->
+        File.write!(@setting_file, encoded)
         conn
         |> put_flash(:info, "Settings created successfully.")
         |> redirect(to: setting_path(conn, :show, %Setting{id: "show"}))
@@ -46,5 +48,21 @@ defmodule BadgeSettings.SettingController do
         unencoded = :erlang.binary_to_term(contents)
         Map.merge(%Setting{id: "show"}, unencoded)
     end
+  end
+
+  defp authenticate(conn, _opts) do
+    case get_session(conn, :device_name) do
+      @device_name ->
+        conn
+      _ ->
+        conn
+        |> put_flash(:error, "You need to log in first.")
+        |> redirect(to: session_path(conn, :new))
+        |> halt()
+    end
+  end
+
+  defp set_login_link(conn, _opts) do
+    assign(conn, :login_link, true)
   end
 end

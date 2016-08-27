@@ -16,13 +16,10 @@ defmodule BadgeSettings.Router do
   scope "/", BadgeSettings do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", SessionController, :new
+
+    resources "/session", SessionController, only: [:index, :new, :create, :delete]
 
     resources "/settings", SettingController, only: [:index, :show, :new, :create]
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", BadgeSettings do
-  #   pipe_through :api
-  # end
 end
