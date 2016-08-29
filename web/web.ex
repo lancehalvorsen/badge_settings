@@ -30,7 +30,6 @@ defmodule BadgeSettings.Web do
     quote do
       use Phoenix.Controller
 
-      alias BadgeSettings.Repo
       import Ecto
       import Ecto.Query
 
@@ -65,7 +64,6 @@ defmodule BadgeSettings.Web do
     quote do
       use Phoenix.Channel
 
-      alias BadgeSettings.Repo
       import Ecto
       import Ecto.Query
       import BadgeSettings.Gettext

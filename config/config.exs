@@ -22,7 +22,8 @@ config :logger, :console,
 
 config :badge_settings, :nerves_settings, %{
   settings_file: "nerves_settings.txt",
-  device_name: "fill_me_in"
+  device_name: "fill_me_in",
+  application_password: System.get_env("BADGE_CONFIG_PASSWORD") || "nerves_rulz!"
 }
 
 # Import environment specific config. This must remain at the bottom

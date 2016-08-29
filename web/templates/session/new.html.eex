@@ -1,0 +1,23 @@
+<div class="jumbotron">
+  <h2>Welcome to <%= @device_name %>!</h2>
+  <p class="lead">Please enter your password below in order to change your device settings.</p>
+
+  <%= form_for @changeset, session_path(@conn, :create), fn f -> %>
+    <%= if not @changeset.valid? do %>
+      <div class="alert alert-danger">
+        <p>Oops, that's the wrong password. Please try again.</p>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= label f, :password, class: "control-label" %>
+      <%= password_input f, :password, class: "form-control" %>
+      <%= error_tag f, :password %>
+    </div>
+
+    <div class="form-group">
+      <%= submit "Submit", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+</div>
